@@ -91,13 +91,8 @@
 			</c:forEach>
 		</table>
 
-
-		<form action="reply_del">
-			<span class="input-group-text">삭제할 댓글 번호</span> <input type="text"
-				class="form-control" name="reply_id"><br>
-			<button>댓글 삭제</button>
-		</form>
 	</div>
+	<br>
 	<a href="/cdb/bbs/bbs_main.jsp"><button>목록으로</button></a>
 	<div>
 		<h4>footer</h4>
