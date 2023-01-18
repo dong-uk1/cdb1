@@ -11,30 +11,29 @@
 	$(function() {
 		//alert('test...')
 		$.ajax({
-			url : "bbs_all", //views/bbsList.jsp가 결과!
-			success : function(result) { //결과가 담겨진 table부분코드
+			url : "bbs_all", 
+			success : function(result) { 
+				$('#d2').html(result)
+			},
+			error : function() {
+				alert('실패.@@@')
+			}
+		})
+		$.ajax({
+			url : "bbs_recommend_sort", 
+			success : function(result) { 
 				$('#d1').html(result)
 			},
 			error : function() {
 				alert('실패.@@@')
 			}
 		})
-		/* $('#b1').click(function() {
-			$.ajax({
-				url : "bbs_search_title",
-				data : $("#search"),
-				success : function(result) {
-					$('#d2').html(result)
-				},
-				error : function() {
-					alert('실패')
-				}
-			})
-		}) //b1 */
+
 	})
 </script>
 <body>
 	<div id="d1"></div>
+	<div id="d2"></div>
 	<!-- 제목, 글쓴이 검색 구분 가능할까? -->
 	<button class="navyBtn" onClick="location.href='bbs_insert.jsp'">글
 		쓰기</button>

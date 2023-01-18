@@ -6,6 +6,7 @@ public class BbsVO {
 	String member_id;
 	String bbs_contents;
 	String bbs_img;
+	private int c;
 	
 	public int getBbs_Id() {
 		return bbs_Id;
@@ -37,6 +38,13 @@ public class BbsVO {
 	}
 	public void setBbs_img(String bbs_img) {
 		this.bbs_img = bbs_img;
+		
+	}
+	public int getC() {
+		return c;
+	}
+	public void setC(int c) {
+		this.c = c;
 	}
 	@Override
 	public String toString() {

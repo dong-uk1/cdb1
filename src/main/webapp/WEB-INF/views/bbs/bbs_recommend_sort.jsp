@@ -15,24 +15,23 @@
 
 </head>
 <body>
-
-<h3>전체 게시물</h3>
-
+<h3>추천 게시물</h3>
 <table class="table">
 	<tr>
 
 		<td>제목</td>
 		<td>작성자</td>
 		<td>내용</td>
-		<td>이미지</td>
+		<td>추천 수</td>
 	</tr>
-	<c:forEach items="${list}" var="vo">
+	<c:forEach var="vo2" items="${list}" >
 	<tr>
 
-		<td><a href="${path}/cdb/bbs/bbs_contents?bbs_Id=${vo.bbs_Id}"> ${vo.bbs_title} </a></td>
-		<td>${vo.member_id}</td>
-		<td>${vo.bbs_contents}</td>
-		<td>${vo.bbs_img}</td>
+		<td><a href="${path}/cdb/bbs/bbs_contents?bbs_Id=${vo2.bbs_Id}"> ${vo2.bbs_title} </a></td>
+		<td>${vo2.member_id}</td>
+		<td>${vo2.bbs_contents}</td>
+		<td>${vo2.c}</td>
+		
 	</tr>
 	</c:forEach>
 </table>

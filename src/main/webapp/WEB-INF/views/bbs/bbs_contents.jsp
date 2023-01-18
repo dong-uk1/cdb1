@@ -49,11 +49,14 @@
 				value="${vo.bbs_Id}"><br> <span
 				class="input-group-text">member_id</span> <input type="text"
 				class="form-control input-sm" name="member_id"><br>
-			<button>좋아요</button> 
+			<button>좋아요 ${count} </button>
 		</form>
-		${count}
+		
 	</div>
-
+	
+	
+			
+	
 	<div id="d2">
 		<h3>댓글</h3>
 

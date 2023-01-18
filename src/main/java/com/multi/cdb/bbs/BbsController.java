@@ -28,8 +28,16 @@ public class BbsController implements stockDAOinter {
 	@Override
 	@RequestMapping("bbs/bbs_all")
 	public void all(Model model) {
-		List<BbsVO> list = dao.all();
+		List<BbsVO> list = dao.all();	
 		model.addAttribute("list", list);
+		
+	}
+	
+	@RequestMapping("bbs/bbs_recommend_sort")
+	public void recommend_sort(Model model) {
+		List<BbsVO> list = dao.recommend_sort();
+		model.addAttribute("list", list);
+		
 	}
 
 	@Override
@@ -66,13 +74,14 @@ public class BbsController implements stockDAOinter {
 	}
 
 	@RequestMapping("bbs/bbs_contents")
-	private void one(int bbs_Id, ReplyVO vo2, Model model) {
+	private void one(int bbs_Id, ReplyVO vo2, RecommendVO vo3, Model model) {
 		BbsVO vo = dao.one(bbs_Id);
 		List<ReplyVO> list = dao2.all(vo2);
-
+		
+		int count = dao.recommend_count(vo3);
 		model.addAttribute("vo",vo);
 		model.addAttribute("list",list);
-		
+		model.addAttribute("count", count);
 		
 		
 

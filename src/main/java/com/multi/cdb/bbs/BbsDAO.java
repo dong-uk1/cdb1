@@ -28,6 +28,9 @@ public class BbsDAO {
 	
 	public List<BbsVO> all() { 
 		 return my.selectList("bbs.all"); }
+
+	public List<BbsVO> recommend_sort() { 
+		return my.selectList("bbs.recommend_sort"); }
 	
 	public int count() {
 		return my.selectOne("bbs.count");
