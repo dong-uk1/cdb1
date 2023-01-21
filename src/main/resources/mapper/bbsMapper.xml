@@ -31,7 +31,23 @@
 	</select>
 
 	<select id="all" resultType="bbsVO">
-		select * from bbs
+		select * from bbs order by bbs_Id desc
+	</select>
+	
+	<select id="list3" 
+			parameterType="bbsPageVO"
+			resultType="bbsVO"
+	>
+		select * from (
+			select
+				row_number() over(order by bbs_Id desc) as b_Id,
+				b.*
+			from bbs b) b2
+		where b2.b_Id between #{start} and #{end}
+	</select>
+	
+	<select id="count" resultType="Integer">
+		select count(*) from bbs
 	</select>
 
 	<select id="recommend_sort" resultType="bbsVO">

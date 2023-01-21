@@ -24,27 +24,53 @@ public class BbsController implements stockDAOinter {
 	
 	@Autowired
 	ReplyDAO dao2;
+	
+	@Autowired
+	BbsPageService page;
 
 	@Override
 	@RequestMapping("bbs/bbs_all")
-	public void all(Model model) {
+	public void all(BbsPageVO vo,Model model) {
 		List<BbsVO> list = dao.all();	
+		
+		int count = dao.count(); //게시물 전체 개수
+		int pages = page.pages(count);
+		
 		model.addAttribute("list", list);
+		model.addAttribute("pages", pages); //int
+		model.addAttribute("count", count); 
 		
 	}
 	
 	@RequestMapping("bbs/bbs_recommend_sort")
 	public void recommend_sort(Model model) {
-		List<BbsVO> list = dao.recommend_sort();
-		model.addAttribute("list", list);
+		try {
+			List<BbsVO> list = dao.recommend_sort();
+			model.addAttribute("list", list);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		
+	}
+	
+	@RequestMapping("bbs/bbsList")
+	public void list3(BbsPageVO vo, Model model) {
+		System.out.println("page값>> " + vo);
+		vo.setStartEnd(vo.getPage());
+		System.out.println("start/end값>> " + vo);
+		List<BbsVO> list = dao.list3(vo);
+		model.addAttribute("list", list);
 	}
 
 	@Override
 	@RequestMapping("bbs/bbs_search_name")
 	public void name(BbsVO vo, Model model) {
-		List<BbsVO> list = dao.list(vo);
-		model.addAttribute("list", list);
+		try {
+			List<BbsVO> list = dao.list(vo);
+			model.addAttribute("list", list);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 
 	@Override
@@ -60,28 +86,35 @@ public class BbsController implements stockDAOinter {
 	@RequestMapping("bbs/bbs_insert")
 	public String insert(BbsVO vo, Model model) {
 
-		int result = dao.insert(vo);
-		// BbsVO vo2 = dao.createdId();
-		String text = "게시물 작성 성공";
-
-		if (result != 1) {
-			text = "게시물 작성 실패";
-			return "redirect:bbs_insert.jsp";
+		try {
+			int result = dao.insert(vo);
+			// BbsVO vo2 = dao.createdId();
+			String text = "게시물 작성 성공";
+			if (result != 1) {
+				text = "게시물 작성 실패";
+				return "redirect:bbs/bbs_insert.jsp";
+			}
+			model.addAttribute("result", text);
+			// model.addAttribute("id", vo2.getBbs_Id());
+			return "redirect:bbs/bbs_main.jsp";
+		} catch (Exception e) {
+			// TODO: handle exception
+			return "redirect:bbs/bbs_insert.jsp";
 		}
-		model.addAttribute("result", text);
-		// model.addAttribute("id", vo2.getBbs_Id());
-		return "redirect:bbs/bbs_main.jsp";
 	}
 
 	@RequestMapping("bbs/bbs_contents")
 	private void one(int bbs_Id, ReplyVO vo2, RecommendVO vo3, Model model) {
-		BbsVO vo = dao.one(bbs_Id);
-		List<ReplyVO> list = dao2.all(vo2);
-		
-		int count = dao.recommend_count(vo3);
-		model.addAttribute("vo",vo);
-		model.addAttribute("list",list);
-		model.addAttribute("count", count);
+		try {
+			BbsVO vo = dao.one(bbs_Id);
+			List<ReplyVO> list = dao2.all(vo2);
+			int count = dao.recommend_count(vo3);
+			model.addAttribute("vo", vo);
+			model.addAttribute("list", list);
+			model.addAttribute("count", count);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		
 		
 
@@ -111,7 +144,11 @@ public class BbsController implements stockDAOinter {
 	@Override
 	@RequestMapping("bbsDel")
 	public void delete(BbsVO vo, Model model) {
-		int result = dao.del(vo);
-		model.addAttribute("result", result);
+		try {
+			int result = dao.del(vo);
+			model.addAttribute("result", result);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 }

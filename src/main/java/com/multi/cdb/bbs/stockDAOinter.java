@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 public interface stockDAOinter {
 
-	void all(Model model);
+	void all(BbsPageVO vo, Model model);
 
 	void name(BbsVO vo, Model model);
 
@@ -18,5 +18,7 @@ public interface stockDAOinter {
 	void recommend_count(RecommendVO vo, Model model);
 
 	void delete(BbsVO vo, Model model);
+
+	
 
 }

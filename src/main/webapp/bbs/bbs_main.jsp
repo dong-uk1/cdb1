@@ -34,15 +34,17 @@
 <body>
 	<div id="d1"></div>
 	<div id="d2"></div>
+	<br>
 	<!-- 제목, 글쓴이 검색 구분 가능할까? -->
 	<button class="navyBtn" onClick="location.href='bbs_insert.jsp'">글
 		쓰기</button>
-
+	<br>
+	<div>
 	<form action="bbs_search_title">
 		<input type="text" class="form-control input-sm" name="bbs_title"
-			id="search"><br>
+			id="search">
 		<button id="b1">제목 검색</button>
-		<div id="d2"></div>
-	</form>
+	</form>	
+	</div>
 </body>
 </html>
