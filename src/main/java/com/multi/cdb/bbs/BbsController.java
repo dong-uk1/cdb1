@@ -21,27 +21,27 @@ public class BbsController implements stockDAOinter {
 
 	@Autowired
 	BbsDAO dao;
-	
+
 	@Autowired
 	ReplyDAO dao2;
-	
+
 	@Autowired
 	BbsPageService page;
 
 	@Override
 	@RequestMapping("bbs/bbs_all")
-	public void all(BbsPageVO vo,Model model) {
-		List<BbsVO> list = dao.all();	
-		
-		int count = dao.count(); //게시물 전체 개수
+	public void all(BbsPageVO vo, Model model) {
+		List<BbsVO> list = dao.all();
+
+		int count = dao.count(); // 게시물 전체 개수
 		int pages = page.pages(count);
-		
+
 		model.addAttribute("list", list);
-		model.addAttribute("pages", pages); //int
-		model.addAttribute("count", count); 
-		
+		model.addAttribute("pages", pages); // int
+		model.addAttribute("count", count);
+
 	}
-	
+
 	@RequestMapping("bbs/bbs_recommend_sort")
 	public void recommend_sort(Model model) {
 		try {
@@ -50,9 +50,9 @@ public class BbsController implements stockDAOinter {
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-		
+
 	}
-	
+
 	@RequestMapping("bbs/bbsList")
 	public void list3(BbsPageVO vo, Model model) {
 		System.out.println("page값>> " + vo);
@@ -92,14 +92,14 @@ public class BbsController implements stockDAOinter {
 			String text = "게시물 작성 성공";
 			if (result != 1) {
 				text = "게시물 작성 실패";
-				return "redirect:bbs/bbs_insert.jsp";
+				return "redirect:/bbs/bbs_insert.jsp";
 			}
 			model.addAttribute("result", text);
 			// model.addAttribute("id", vo2.getBbs_Id());
-			return "redirect:bbs/bbs_main.jsp";
+			return "redirect:/bbs/bbs_main.jsp";
 		} catch (Exception e) {
 			// TODO: handle exception
-			return "redirect:bbs/bbs_insert.jsp";
+			return "redirect:/bbs/bbs_insert.jsp";
 		}
 	}
 
@@ -115,20 +115,21 @@ public class BbsController implements stockDAOinter {
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-		
-		
 
 	}
 
 	@Override
 	@RequestMapping("bbs/bbs_recommend")
-	public void insert2(RecommendVO vo, Model model) {
-
-		int list = dao.insert2(vo);
-		int count = dao.recommend_count(vo);
-		model.addAttribute("list", list);
-		model.addAttribute("count", count);
-		// model.addAttribute("id", vo2.getBbs_Id());
+	public String insert2(RecommendVO vo, Model model) {
+		try {
+			int list = dao.insert2(vo);
+			int count = dao.recommend_count(vo);
+			model.addAttribute("list", list);
+			model.addAttribute("count", count);
+			return "redirect:/bbs/bbs_contents?bbs_Id="+vo.getBbs_Id();
+		} catch (Exception e) {
+			return "redirect:/bbs/bbs_contents?bbs_Id="+vo.getBbs_Id();
+		}
 	}
 
 	@Override

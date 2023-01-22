@@ -37,7 +37,7 @@
 						//ajax 필요
 						//ajax안에 ajax 만들기 가능
 						$.ajax({
-							url : 'db_create.jsp',
+							url : 'r_news_insert',
 							async : false, // 비동기(순서없이 들어감) 기능 끔
 							data : {
 								title : title,

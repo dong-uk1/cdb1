@@ -1,11 +1,11 @@
 package com.multi.cdb.bbs;
 
 public class BbsVO {
-	int bbs_Id;
-	String bbs_title; 
-	String member_id;
-	String bbs_contents;
-	String bbs_img;
+	private int bbs_Id;
+	private String bbs_title; 
+	private String member_id;
+	private String bbs_contents;
+	private String bbs_img;
 	private int c;
 	
 	public int getBbs_Id() {

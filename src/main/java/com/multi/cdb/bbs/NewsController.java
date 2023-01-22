@@ -13,7 +13,7 @@ public class NewsController {
 	@Autowired
 	NewsDAO dao;
 	
-	@RequestMapping("rnews_insert.do")
+	@RequestMapping("bbs/r_news_insert")
 	public void insert(NewsVO vo, Model model) {
 		//리뷰<--- movie(oriId, img)
 		//insert into review values (null, #{oriId}, #{content}, #{writer})

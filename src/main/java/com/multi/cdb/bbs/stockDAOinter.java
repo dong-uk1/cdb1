@@ -13,7 +13,7 @@ public interface stockDAOinter {
 
 	String insert(BbsVO vo, Model model);
 
-	void insert2(RecommendVO vo, Model model);
+	String insert2(RecommendVO vo, Model model);
 
 	void recommend_count(RecommendVO vo, Model model);
 
