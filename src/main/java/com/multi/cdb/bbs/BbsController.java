@@ -2,6 +2,7 @@ package com.multi.cdb.bbs;
 
 import java.io.Console;
 import java.io.File;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
@@ -17,7 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.mysql.cj.xdevapi.Result;
 
 @Controller
-public class BbsController implements stockDAOinter {
+public class BbsController {
 
 	@Autowired
 	BbsDAO dao;
@@ -28,7 +29,7 @@ public class BbsController implements stockDAOinter {
 	@Autowired
 	BbsPageService page;
 
-	@Override
+	
 	@RequestMapping("bbs/bbs_all")
 	public void all(BbsPageVO vo, Model model) {
 		List<BbsVO> list = dao.all();
@@ -62,7 +63,7 @@ public class BbsController implements stockDAOinter {
 		model.addAttribute("list", list);
 	}
 
-	@Override
+	
 	@RequestMapping("bbs/bbs_search_name")
 	public void name(BbsVO vo, Model model) {
 		try {
@@ -73,7 +74,7 @@ public class BbsController implements stockDAOinter {
 		}
 	}
 
-	@Override
+
 	@RequestMapping("bbs/bbs_search_title")
 	public void title(BbsVO vo, Model model) {
 		List<BbsVO> list = dao.list2(vo);
@@ -82,26 +83,43 @@ public class BbsController implements stockDAOinter {
 //		return "redirect:bbs_main.jsp";
 	}
 
-	@Override
+	
 	@RequestMapping("bbs/bbs_insert")
-	public String insert(BbsVO vo, Model model) {
-
+	public String insert(BbsVO vo, HttpServletRequest request, 
+			MultipartFile file, 
+			Model model) {
 		try {
-			int result = dao.insert(vo);
-			// BbsVO vo2 = dao.createdId();
-			String text = "게시물 작성 성공";
-			if (result != 1) {
-				text = "게시물 작성 실패";
-				return "redirect:/bbs/bbs_insert.jsp";
+			String savedName = file.getOriginalFilename();
+			String uploadPath = request.getSession().getServletContext().getRealPath("resources/upload");
+			File target = new File(uploadPath + "/" + savedName);
+			System.out.println("업로드 경로는 " + uploadPath);
+			System.out.println(uploadPath + "/" + savedName);
+			if (file.isEmpty()) {
+				savedName = "null_img.png";
 			}
-			model.addAttribute("result", text);
-			// model.addAttribute("id", vo2.getBbs_Id());
+			if (!target.isDirectory()) {
+				target.mkdir();
+			}
+			try {
+				file.transferTo(target);
+				System.out.println("파일 넣기 성공");
+			} catch (IllegalStateException | IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			model.addAttribute("savedName", savedName);
+			System.out.println("img넣기 전>> " + vo);
+			vo.setBbs_img(savedName);
+			System.out.println("img넣은 후>> " + vo);
+			dao.insert(vo);
 			return "redirect:/bbs/bbs_main.jsp";
 		} catch (Exception e) {
 			// TODO: handle exception
-			return "redirect:/bbs/bbs_insert.jsp";
+			return "redirect:/bbs/bbs_main.jsp";
 		}
-	}
+	
+}
+
 
 	@RequestMapping("bbs/bbs_contents")
 	private void one(int bbs_Id, ReplyVO vo2, RecommendVO vo3, Model model) {
@@ -118,7 +136,7 @@ public class BbsController implements stockDAOinter {
 
 	}
 
-	@Override
+	
 	@RequestMapping("bbs/bbs_recommend")
 	public String insert2(RecommendVO vo, Model model) {
 		try {
@@ -132,7 +150,7 @@ public class BbsController implements stockDAOinter {
 		}
 	}
 
-	@Override
+	
 	@RequestMapping("bbs/bbs_recommend_count")
 	public void recommend_count(RecommendVO vo, Model model) {
 
@@ -142,7 +160,7 @@ public class BbsController implements stockDAOinter {
 		// model.addAttribute("id", vo2.getBbs_Id());
 	}
 
-	@Override
+	
 	@RequestMapping("bbsDel")
 	public void delete(BbsVO vo, Model model) {
 		try {

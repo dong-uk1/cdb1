@@ -51,6 +51,10 @@ public class BbsVO {
 		return "BbsVO [bbs_Id=" + bbs_Id + ", bbs_title=" + bbs_title + ", member_id=" + member_id + ", bbs_contents="
 				+ bbs_contents + ", bbs_img=" + bbs_img + "]";
 	}
+	public void setFile_name(String savedName) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 
 	
